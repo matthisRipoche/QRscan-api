@@ -17,8 +17,8 @@ class BadgeController extends Controller
     {
         // Validation des données reçues
         $validated = $request->validate([
-            'id' => 'required|string',        // Id du badge
-            'datetime' => 'required|date',    // Date et heure
+            'id' => 'required|string', // Id du badge
+            'datetime' => 'required|date', // Date et heure
         ]);
 
         // Essayer de trouver le badge correspondant dans la base de données
