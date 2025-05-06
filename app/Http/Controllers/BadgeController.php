@@ -26,8 +26,13 @@ class BadgeController extends Controller
             // Rechercher le badge par son code
             $badge = Badge::where('code', $validated['id'])->first();
 
+            $badge->message = 'Badge synchronisé';
+
             if (!$badge) {
                 // Si le badge n'est pas trouvé, on renvoie une réponse d'erreur
+
+                $badge->message = 'Badge non trouvé';
+
                 return response()->json([
                     'message' => 'Badge introuvable',
                     'status' => 404
@@ -36,6 +41,7 @@ class BadgeController extends Controller
 
             // Si le badge existe, on met à jour son statut
             $badge->statut = 2; // Statut "synchronisé"
+            $badge->message = 'Badge synchronisé';
             $badge->last_import = $validated['datetime']; // Mettre à jour la date
             $badge->save();
 
