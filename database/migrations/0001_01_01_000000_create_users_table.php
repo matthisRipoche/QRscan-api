@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password', 255);
             $table->string('role', 255);
             $table->string('token', 255)->nullable();
-            $table->foreignId('badge_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('badge_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
