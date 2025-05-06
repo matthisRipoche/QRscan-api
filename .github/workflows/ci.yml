@@ -17,14 +17,28 @@ jobs:
           script: |
             cd ${{ secrets.PROJECT_PATH }}
 
-            # Corriger les permissions des dossiers critiques
+            echo "🚧 Mise en maintenance..."
+            php artisan down || true
+
+            echo "📥 Pull du code..."
+            git pull origin main
+
+            echo "📦 Installation des dépendances..."
+            composer install --no-dev --optimize-autoloader
+
+            echo "🔧 Permissions des dossiers Laravel..."
             sudo chown -R www-data:www-data storage bootstrap/cache
             sudo chmod -R 775 storage bootstrap/cache
 
-            # Continuer avec le reste du déploiement
-            git pull
-            composer install --no-dev --optimize-autoloader
+            echo "⚙️  Cache & migrations..."
+            php artisan config:clear
             php artisan config:cache
             php artisan route:cache
             php artisan view:clear
             php artisan migrate:fresh --seed --force
+
+            echo "✅ Mise en production terminée."
+            php artisan up
+
+            echo "🔍 Vérification de l’état de l’API..."
+            curl --fail https://qrscanapi.matthisripoche.com/api/health || exit 1
