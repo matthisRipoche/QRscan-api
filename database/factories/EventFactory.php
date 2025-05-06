@@ -12,7 +12,7 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->sentence(3), // Nom de l'évènement (phrase aléatoire)
+            'titre' => $this->faker->sentence(3), // Nom de l'évènement (phrase aléatoire)
             'date' => $this->faker->dateTimeBetween('-1 years', '+1 year'), // Date entre 1 an dans le passé et 1 an dans le futur
         ];
     }
