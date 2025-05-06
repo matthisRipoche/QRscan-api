@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('badges', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->string('status', 30);
+            $table->string('status', 255);
             $table->dateTime('date_import');
             $table->timestamps();
         });
