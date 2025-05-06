@@ -13,4 +13,10 @@ class Event extends Model
         'titre',
         'date',
     ];
+
+
+    public function badges()
+    {
+        return $this->hasMany(Badge::class);
+    }
 }

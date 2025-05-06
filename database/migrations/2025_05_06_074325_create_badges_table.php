@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('code');
             $table->string('status', 255);
             $table->dateTime('date_import');
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

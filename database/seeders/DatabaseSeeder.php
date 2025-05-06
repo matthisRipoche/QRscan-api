@@ -16,6 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        Event::factory()->count(10)->create();
+
+        $eventIds = Event::pluck('id')->toArray(); // Récupère tous les IDs des events existants
+
+        Badge::factory()->count(50)->create([
+            'event_id' => fn() => collect($eventIds)->random(),
+        ]);
+
+
+
         User::factory(10)->create();
 
         User::factory()->create([
@@ -30,8 +41,5 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'token' => Str::random(32),
         ]);
-
-        Badge::factory()->count(20)->create();
-        Event::factory()->count(10)->create();
     }
 }
