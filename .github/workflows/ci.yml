@@ -6,6 +6,7 @@ jobs:
   deploy:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.10
@@ -17,6 +18,14 @@ jobs:
           script: |
             cd ${{ secrets.PROJECT_PATH }}
 
+            echo "🔧 Fix permissions early..."
+            sudo chown -R $USER:www-data .
+            sudo chown -R www-data:www-data storage bootstrap/cache
+            sudo chmod -R 775 storage bootstrap/cache
+
+            echo "🔐 Git safe directory setup..."
+            git config --global --add safe.directory $(pwd)
+
             echo "🚧 Mise en maintenance..."
             php artisan down || true
 
@@ -24,21 +33,19 @@ jobs:
             git pull origin main
 
             echo "📦 Installation des dépendances..."
-            composer install --no-dev --optimize-autoloader
+            composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
-            echo "🔧 Permissions des dossiers Laravel..."
-            sudo chown -R www-data:www-data storage bootstrap/cache
-            sudo chmod -R 775 storage bootstrap/cache
-
-            echo "⚙️  Cache & migrations..."
+            echo "⚙️  Clear & cache Laravel config..."
             php artisan config:clear
             php artisan config:cache
             php artisan route:cache
             php artisan view:clear
-            php artisan migrate:fresh --seed --force
 
-            echo "✅ Mise en production terminée."
+            echo "🧱 Migration & seed..."
+            php artisan migrate --seed --force
+
+            echo "✅ Application online"
             php artisan up
 
-            echo "🔍 Vérification de l’état de l’API..."
-            curl --fail https://qrscanapi.matthisripoche.com/api/health || exit 1
+            echo "🔍 API health check..."
+            curl -k --fail https://qrscanapi.matthisripoche.com/api/health || exit 1
