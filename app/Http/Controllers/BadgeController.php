@@ -19,10 +19,12 @@ class BadgeController extends Controller
         $validated = $request->validate([
             'id' => 'required|string',
             'datetime' => 'required|date',
+            'event_id' => 'required|exists:events,id'
         ]);
 
         try {
-            $badge = Badge::where('code', $validated['id'])->first();
+            // Rechercher le badge par son code et son event_id
+            $badge = Badge::where('code', $validated['id'])->where('event_id', $validated['event_id'])->first();
 
             if (!$badge) {
                 return response()->json([
