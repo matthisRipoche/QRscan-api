@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Badge;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class BadgeController extends Controller
 {
@@ -36,11 +37,12 @@ class BadgeController extends Controller
 
             // Mise à jour des infos du badge
             $badge->statut = 2;
-            $badge->last_import = $validated['datetime'];
+            $badge->last_import = Carbon::parse($validated['datetime']);
             $badge->save();
 
             return response()->json([
                 'message' => 'Badge importé avec succès',
+                'badge' => $badge,
                 'status' => 200
             ]);
         } catch (\Exception $e) {
