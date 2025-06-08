@@ -15,14 +15,6 @@ class BadgeController extends Controller
      */
     public function import(Request $request)
     {
-
-        return response()->json([
-            'message' => 'Données reçues',
-            'data' => $request->all(),
-            'headers' => $request->headers->all()
-        ]);
-
-
         // Validation des données reçues
         $validated = $request->validate([
             'id' => 'required|string',
