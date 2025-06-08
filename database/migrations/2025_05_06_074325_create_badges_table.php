@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('code');
             $table->string('status', 255);
-            $table->dateTime('date_import');
+            $table->dateTime('last_import')->nullable();
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
