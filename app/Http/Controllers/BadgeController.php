@@ -28,7 +28,7 @@ class BadgeController extends Controller
 
             if (!$badge) {
                 return response()->json([
-                    'message' => 'Badge introuvable',
+                    'message' => 'Badge introuvable pour le code ' . $validated['id'] . ' et l\'event ' . $validated['event_id'],
                     'status' => 404
                 ], 404);
             }
