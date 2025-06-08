@@ -9,10 +9,17 @@ class Badge extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'code',
+        'event_id',
+        'statut',
+        'last_import',
+        'user_id'
+    ];
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function event()
