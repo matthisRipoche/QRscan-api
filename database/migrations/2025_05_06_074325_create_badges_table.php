@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->string('status', 255);
             $table->dateTime('date_import');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('set null');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }
