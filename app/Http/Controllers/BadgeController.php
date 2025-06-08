@@ -35,6 +35,11 @@ class BadgeController extends Controller
             }
 
 
+            return response()->json([
+                'message' => 'Badge trouvé avec le code ' . $badge->code . ' et l\'event ' . $badge->event_id,
+                'status' => 404
+            ], 404);
+
             // Mise à jour des infos du badge
             $badge->statut = 2;
             $badge->last_import = Carbon::parse($validated['datetime']);
