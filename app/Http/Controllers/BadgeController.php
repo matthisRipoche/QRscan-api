@@ -33,12 +33,6 @@ class BadgeController extends Controller
                 ], 404);
             }
 
-            return response()->json([
-                'message' => 'Badge trouvé avec le code ' . $validated['id'] . ' et l\'event ' . $validated['event_id'],
-                'status' => 200
-            ]);
-
-
 
             // Mise à jour des infos du badge
             $badge->statut = 2;
