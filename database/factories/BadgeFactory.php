@@ -14,7 +14,7 @@ class BadgeFactory extends Factory
         return [
             'code' => $this->faker->unique()->ean8(), // Code EAN8 unique
             'status' => $this->faker->word(), // Statut du badge
-            'date_import' => $this->faker->dateTimeThisYear(), // Date d'import cette année
+            'last_import' => $this->faker->dateTimeThisYear(), // Date d'import cette année
         ];
     }
 }
