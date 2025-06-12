@@ -14,6 +14,9 @@ return new class extends Migration {
             $table->dateTime('last_import')->nullable();
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
+
+            $table->unsignedBigInteger('type_acces_id')->nullable();
+
             $table->timestamps();
         });
     }

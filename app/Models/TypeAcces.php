@@ -5,16 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Event extends Model
+class TypeAcces extends Model
 {
     use HasFactory;
 
+    protected $table = 'types_acces';
+
+
     protected $fillable = [
-        'titre',
-        'date',
-        'point_acces_id',
+        'name',
     ];
 
+
+    public function points_acces()
+    {
+        return $this->hasMany(PointAcces::class);
+    }
 
     public function badges()
     {
